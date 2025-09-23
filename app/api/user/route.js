@@ -1,4 +1,7 @@
-import { userRegisterFunc } from "@/app/Controllers/authController";
+import {
+  userLoginFunc,
+  userRegisterFunc,
+} from "@/app/Controllers/authController";
 import connectDB from "@/app/utils/database";
 import { NextResponse } from "next/server";
 
@@ -71,7 +74,10 @@ export async function POST(request) {
 
     if (searchParams.get("signup")) {
       return userRegisterFunc(request);
+    } else {
+      return userLoginFunc(request);
     }
+
     return NextResponse.json({ message: "Data posted on DB", success: true });
   } catch (error) {
     return NextResponse.json({ message: error.message, success: false });

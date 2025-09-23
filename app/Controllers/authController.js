@@ -78,3 +78,75 @@ export const userRegisterFunc = async (request) => {
 
 /////////******************************************************************************////////
 /////////******************************************************************************////////
+
+// // // Starting of User Login function;
+
+export const userLoginFunc = async (request) => {
+  const { email, password } = await request.json();
+
+  try {
+    let userLogin = await UserSCHEMA.findOne({ userEmail: email });
+
+    if (!userLogin) {
+      console.log("User login not exists...!");
+      return NextResponse.json({
+        message: "User login not exists...!",
+        success: false,
+      });
+    }
+
+    const unHashPassWord = await bcrypt.compare(
+      password,
+      userLogin.userPassword
+    );
+
+    if (!unHashPassWord) {
+      console.log("Invalid login password...!");
+      return NextResponse.json({
+        message: "Invalid login password...!",
+        success: false,
+      });
+    }
+
+    console.log(`Welcome ${userLogin.userName}`);
+    return NextResponse.json({
+      message: `Welcome ${userLogin.userName}`,
+      success: true,
+      userLogin,
+    });
+    // // // Open the POSTMAN select the POST request and enter url (http://localhost:3000/api/user?login=true) and then make the body as :-
+    /**
+     * {
+     "email":"himanshu@gmail.com",
+    "password":"123"
+}
+     */
+    // // // Then, hit send btn. You will get the response as :-
+    /**
+     * {
+    "message": "Welcome himanshu",
+    "success": true,
+    "userLogin": {
+        "_id": "68d2e13da93c0ac1b54aab32",
+        "userName": "himanshu",
+        "userEmail": "himanshu@gmail.com",
+        "userPassword": "$2b$10$qwh14rGjgh.uCUXCvbsiCuMEk.XJQzbaznUAH2FDIOAMFsOzfeKb2",
+        "createdAt": "2025-09-23T18:04:45.040Z",
+        "updatedAt": "2025-09-23T18:04:45.040Z",
+        "__v": 0
+    }
+}
+     */
+  } catch (error) {
+    return NextResponse.json({
+      message: "Server error in user login",
+      success: false,
+      error: message.error,
+    });
+  }
+};
+
+// // // Starting of User Login function;
+
+/////////******************************************************************************////////
+/////////******************************************************************************////////
