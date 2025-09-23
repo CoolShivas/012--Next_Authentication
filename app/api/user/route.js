@@ -73,8 +73,10 @@ export async function POST(request) {
     const { searchParams } = new URL(request.url);
 
     if (searchParams.get("signup")) {
+      // // // (http://localhost:3000/api/user?signup=true)
       return userRegisterFunc(request);
     } else {
+      // // // (http://localhost:3000/api/user?login=true)
       return userLoginFunc(request);
     }
 

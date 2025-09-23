@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import UserSCHEMA from "../Models/UserSCHEMA";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 /////////******************************************************************************////////
 /////////******************************************************************************////////
@@ -108,11 +109,16 @@ export const userLoginFunc = async (request) => {
       });
     }
 
+    const generateToken = jwt.sign({ userId: userLogin._id }, "!@#$%^&", {
+      expiresIn: "1d",
+    });
+
     console.log(`Welcome ${userLogin.userName}`);
     return NextResponse.json({
       message: `Welcome ${userLogin.userName}`,
       success: true,
       userLogin,
+      generateToken,
     });
     // // // Open the POSTMAN select the POST request and enter url (http://localhost:3000/api/user?login=true) and then make the body as :-
     /**
@@ -134,7 +140,8 @@ export const userLoginFunc = async (request) => {
         "createdAt": "2025-09-23T18:04:45.040Z",
         "updatedAt": "2025-09-23T18:04:45.040Z",
         "__v": 0
-    }
+    },
+     "generateToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGQyZTAzZWE5M2MwYWMxYjU0YWFiMjgiLCJpYXQiOjE3NTg2NTMxMTcsImV4cCI6MTc1ODczOTUxN30.l_Urt476C7i_eMU86eOI6O5Eptcq_4VG_4s3VTwg4Ys"
 }
      */
   } catch (error) {
