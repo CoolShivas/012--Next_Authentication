@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import UserSCHEMA from "../Models/UserSCHEMA";
 
 /////////******************************************************************************////////
 /////////******************************************************************************////////
@@ -7,29 +8,36 @@ import { NextResponse } from "next/server";
 
 export const userRegisterFunc = async (request) => {
   const { name, email, password } = await request.json();
-  console.log("Register data successfully => ", name, email, password);
-  /**
-   * MongoDB Connected Successfully...!
-Register data successfully =>  shiva shiva@gmail.com 123
- POST /api/user?signup=true 200 in 2903ms
- GET / 200 in 2650ms
-   */
-  return NextResponse.json({
-    message: "Register data successfully..",
-    success: true,
-    data: { name, email, password },
-  });
-  /**
-   * {
-    "message": "Register data successfully..",
-    "success": true,
-    "data": {
-        "name": "shiva",
-        "email": "shiva@gmail.com",
-        "password": "123"
+  try {
+    let userReg = await UserSCHEMA.findOne({ userEmail: email });
+
+    if (userReg) {
+      console.log("User already registered");
+      return NextResponse.json({
+        message: "User already registered",
+        success: false,
+      });
     }
-}
-   */
+
+    userReg = await UserSCHEMA.create({
+      userName: name,
+      userEmail: email,
+      userPassword: password,
+    });
+
+    console.log("User registered successfully => ", userReg);
+    return NextResponse.json({
+      message: "User registered successfully....!",
+      success: true,
+      userReg,
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Server error in user register",
+      success: false,
+      error: message.error,
+    });
+  }
 };
 
 // // // Ending of User Register function;
