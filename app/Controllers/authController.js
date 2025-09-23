@@ -6,11 +6,30 @@ import { NextResponse } from "next/server";
 // // // Starting of User Register function;
 
 export const userRegisterFunc = async (request) => {
-  console.log("Testing the Post Request => ", request.json());
+  const { name, email, password } = await request.json();
+  console.log("Register data successfully => ", name, email, password);
+  /**
+   * MongoDB Connected Successfully...!
+Register data successfully =>  shiva shiva@gmail.com 123
+ POST /api/user?signup=true 200 in 2903ms
+ GET / 200 in 2650ms
+   */
   return NextResponse.json({
-    message: "Testing the Post Request",
+    message: "Register data successfully..",
     success: true,
+    data: { name, email, password },
   });
+  /**
+   * {
+    "message": "Register data successfully..",
+    "success": true,
+    "data": {
+        "name": "shiva",
+        "email": "shiva@gmail.com",
+        "password": "123"
+    }
+}
+   */
 };
 
 // // // Ending of User Register function;
