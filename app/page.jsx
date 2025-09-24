@@ -1,9 +1,9 @@
+import AuthForm from "./components/AuthForm";
+
 const HomePage = () => {
   return (
     <>
-      <center>
-        <h1>Welcome to the Home Page.</h1>
-      </center>
+      <AuthForm></AuthForm>
     </>
   );
 };
