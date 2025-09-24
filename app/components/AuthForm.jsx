@@ -1,5 +1,5 @@
 "use client";
-
+import axios from "axios";
 import { useState } from "react";
 import {
   FaUser,
@@ -23,6 +23,19 @@ const AuthForm = () => {
     console.log("input field entered", formData);
   };
 
+  const handlerOnSubmitForm = async (event) => {
+    event.preventDefault();
+
+    // // // http://localhost:3000/api/user?login=true
+    const url = isLogin ? "/api/user?login=true" : "/api/user?signup=true";
+
+    const { data } = await axios.post(url, formData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    console.log("Printing data of backend => ", data); // // Getting the data on Broser's Console now;
+  };
   return (
     <div>
       <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -39,7 +52,7 @@ const AuthForm = () => {
             <h2 className="fw-bold">{isLogin ? "Login" : "Signup"}</h2>
           </div>
           <hr />
-          <form>
+          <form onSubmit={handlerOnSubmitForm}>
             {/* user input */}
             {!isLogin && (
               <div className="mb-3 input-group">
