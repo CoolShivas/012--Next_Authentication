@@ -8,8 +8,10 @@ import {
   FaSignInAlt,
   FaUserPlus,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const AuthForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -41,6 +43,17 @@ const AuthForm = () => {
       console.log("Printing data of backend => ", data); // // Getting the data on Broser's Console now;
       alert(data.message);
       setIsMessage(data.message);
+
+      if (isLogin) {
+        // // // Saving or storing the token and user information to local storage by key in double quotes and then value;
+        localStorage.setItem("token", data.generateToken);
+        // // // As we have already made the api's which are in json format that' why we have to use JSON.stringify(data.userLogin) here;
+        localStorage.setItem("user", JSON.stringify(data.userLogin));
+
+        // // // If user login having token and user information to local storage;
+        // // // Re-direct it to profile page. If not then signup first then login redirect to profile page;
+        router.push("/profile");
+      }
     } catch (error) {
       setIsMessage("Something went wrong on AuthForm");
     } finally {
