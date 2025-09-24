@@ -73,15 +73,20 @@ const AuthForm = () => {
                 required
               />
             </div>
-            <button className="btn btn-primary" type="submit">
-              Log-In / Sign-Up
+            <button
+              className={`w-100 ${
+                isLogin ? "btn btn-primary" : "btn btn-success"
+              }`}
+              type="submit"
+            >
+              {isLogin ? "Log-In" : "Sign-Up"}
             </button>
           </form>
           <p
             className="text-center mt-3 text-primary"
             style={{ cursor: "pointer" }}
           >
-            Create an account / Alreday have an account? Login
+            {isLogin ? "Create an account" : "Alreday have an account? Login"}
           </p>
           <p className="text-danger text-center mt-2">Alert Message</p>
         </div>
