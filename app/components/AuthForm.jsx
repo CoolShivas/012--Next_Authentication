@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   FaUser,
   FaEnvelope,
@@ -9,6 +10,9 @@ import {
 } from "react-icons/fa";
 
 const AuthForm = () => {
+  // const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
+
   return (
     <div>
       <div className="container d-flex justify-content-center align-items-center vh-100">
@@ -17,7 +21,12 @@ const AuthForm = () => {
           style={{ width: "28rem", borderRadius: "12px" }}
         >
           <div className="text-center">
-            <h2 className="fw-bold">Login / SignUp</h2>
+            {isLogin ? (
+              <FaSignInAlt size={50} className="text-primary mb-3" />
+            ) : (
+              <FaUserPlus size={50} className="text-success mb-3" />
+            )}
+            <h2 className="fw-bold">{isLogin ? "Login" : "Signup"}</h2>
           </div>
           <hr />
           <form>
