@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaUser,
   FaEnvelope,
@@ -60,6 +60,25 @@ const AuthForm = () => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/");
+    }
+  }, []);
+
+  /**
+   * This useEffect part kicks in when the component mounts.
+
+Purpose: If the user already has a token from a previous session (say they refreshed the page or opened /login directly), the app doesn’t wait for them to submit the form again — it just auto-redirects them to /profile.
+
+🔑 So why both?
+
+handlerOnSubmitForm: handles new login → redirect immediately.
+
+useEffect: handles already logged-in users → prevents them from seeing the login/signup page again
+   */
+
   return (
     <div>
       <div className="container d-flex justify-content-center align-items-center vh-100">
