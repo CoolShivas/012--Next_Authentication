@@ -15,6 +15,8 @@ const page = () => {
 
   const handlerOnLogOut = () => {
     console.log("user logout");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     router.push("/");
   };
 
