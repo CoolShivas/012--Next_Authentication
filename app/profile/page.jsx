@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Navbar from "../components/Navbar";
 
 const page = () => {
   const router = useRouter();
@@ -47,6 +48,7 @@ const page = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="container mt-5 d-flex justify-content-center ">
         <div
           className="card p-4"
