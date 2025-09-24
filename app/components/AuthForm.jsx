@@ -17,24 +17,35 @@ const AuthForm = () => {
   });
 
   const [isLogin, setIsLogin] = useState(true);
+  const [isMessage, setIsMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlerOnChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    console.log("input field entered", formData);
+    // console.log("input field entered", formData);
   };
 
   const handlerOnSubmitForm = async (event) => {
     event.preventDefault();
 
-    // // // http://localhost:3000/api/user?login=true
-    const url = isLogin ? "/api/user?login=true" : "/api/user?signup=true";
+    try {
+      // // // http://localhost:3000/api/user?login=true
+      const url = isLogin ? "/api/user?login=true" : "/api/user?signup=true";
 
-    const { data } = await axios.post(url, formData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    console.log("Printing data of backend => ", data); // // Getting the data on Broser's Console now;
+      const { data } = await axios.post(url, formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      console.log("Printing data of backend => ", data); // // Getting the data on Broser's Console now;
+      alert(data.message);
+      setIsMessage(data.message);
+    } catch (error) {
+      setIsMessage("Something went wrong on AuthForm");
+    } finally {
+      setIsLoading(false);
+    }
   };
   return (
     <div>
@@ -108,7 +119,7 @@ const AuthForm = () => {
               }`}
               type="submit"
             >
-              {isLogin ? "Log-In" : "Sign-Up"}
+              {isLoading ? "Processing..." : isLogin ? "Login" : "Signup"}
             </button>
           </form>
           <p
@@ -120,7 +131,9 @@ const AuthForm = () => {
               ? "Create an account.! Signup"
               : "Alreday have an account.! Login"}
           </p>
-          <p className="text-danger text-center mt-2">Alert Message</p>
+          {isMessage && (
+            <p className="text-danger text-center mt-2">{isMessage}</p>
+          )}
         </div>
       </div>
     </div>
