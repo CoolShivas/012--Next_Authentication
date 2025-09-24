@@ -10,7 +10,18 @@ import {
 } from "react-icons/fa";
 
 const AuthForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
   const [isLogin, setIsLogin] = useState(true);
+
+  const handlerOnChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+    console.log("input field entered", formData);
+  };
 
   return (
     <div>
@@ -38,9 +49,11 @@ const AuthForm = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Name"
                   className="form-control"
                   required
+                  placeholder="Enter the name here"
+                  value={formData.name}
+                  onChange={handlerOnChange}
                 />
               </div>
             )}
@@ -53,9 +66,11 @@ const AuthForm = () => {
               <input
                 type="email"
                 name="email"
-                placeholder="Email"
                 className="form-control"
                 required
+                placeholder="Enter the email here"
+                value={formData.email}
+                onChange={handlerOnChange}
               />
             </div>
 
@@ -67,9 +82,11 @@ const AuthForm = () => {
               <input
                 type="password"
                 name="password"
-                placeholder="Password"
                 className="form-control"
                 required
+                placeholder="Enter the password here"
+                value={formData.password}
+                onChange={handlerOnChange}
               />
             </div>
             <button
@@ -86,7 +103,9 @@ const AuthForm = () => {
             style={{ cursor: "pointer" }}
             onClick={() => setIsLogin(!isLogin)}
           >
-            {isLogin ? "Create an account" : "Alreday have an account? Login"}
+            {isLogin
+              ? "Create an account.! Signup"
+              : "Alreday have an account.! Login"}
           </p>
           <p className="text-danger text-center mt-2">Alert Message</p>
         </div>
