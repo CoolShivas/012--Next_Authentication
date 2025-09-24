@@ -8,8 +8,16 @@ import {
   FaUserPlus,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const router = useRouter();
+
+  const handlerOnLogOut = () => {
+    console.log("user logout");
+    router.push("/");
+  };
+
   return (
     <div>
       <div className="container mt-5 d-flex justify-content-center ">
@@ -32,7 +40,10 @@ const page = () => {
               <strong>Email :</strong>
             </p>
           </div>
-          <button className="btn btn-danger w-100 mt-3 d-flex justify-content-center align-items-center">
+          <button
+            className="btn btn-danger w-100 mt-3 d-flex justify-content-center align-items-center"
+            onClick={handlerOnLogOut}
+          >
             <FaSignOutAlt className="me-2" /> Logout
           </button>
         </div>
