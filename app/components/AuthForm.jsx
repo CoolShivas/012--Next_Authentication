@@ -10,8 +10,8 @@ import {
 } from "react-icons/fa";
 
 const AuthForm = () => {
-  // const [isLogin, setIsLogin] = useState(true);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+  // const [isLogin, setIsLogin] = useState(false);
 
   return (
     <div>
@@ -31,18 +31,20 @@ const AuthForm = () => {
           <hr />
           <form>
             {/* user input */}
-            <div className="mb-3 input-group">
-              <span className="input-group-text">
-                <FaUser className="text-primary" />
-              </span>
-              <input
-                type="text"
-                name="name"
-                placeholder="Name"
-                className="form-control"
-                required
-              />
-            </div>
+            {!isLogin && (
+              <div className="mb-3 input-group">
+                <span className="input-group-text">
+                  <FaUser className="text-primary" />
+                </span>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  className="form-control"
+                  required
+                />
+              </div>
+            )}
 
             {/* email input */}
             <div className="mb-3 input-group">
