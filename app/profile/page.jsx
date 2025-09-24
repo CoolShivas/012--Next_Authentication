@@ -9,9 +9,12 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const page = () => {
   const router = useRouter();
+
+  const [userData, setUserData] = useState(null);
 
   const handlerOnLogOut = () => {
     console.log("user logout");
@@ -19,6 +22,28 @@ const page = () => {
     localStorage.removeItem("user");
     router.push("/");
   };
+
+  useEffect(() => {
+    // // // Now, getting the whole details of user as already stored in the Local Storage;
+    // // // At the time of setItems in local storage we have given the key "user" and getting it here;
+
+    const storeSavedUser = localStorage.getItem("user");
+
+    if (!storeSavedUser) {
+      // // // if user not stored on localStorage then redirecting it to login page;
+
+      router.push("/");
+    } else {
+      // // // If having the user details in the localStorage then parse it to render the profile page data;
+
+      setUserData(JSON.parse(storeSavedUser));
+    }
+  }, []);
+
+  if (!userData) {
+    // // // If not having the user data on local storage then return null;
+    return null;
+  }
 
   return (
     <div>
@@ -35,11 +60,11 @@ const page = () => {
           <div className="px-3">
             <p className="d-flex align-items-center">
               <FaUser className="text-primary me-2" />
-              <strong>Name :</strong>
+              <span>Name : {userData.userName}</span>
             </p>
             <p className="d-flex align-items-center">
               <FaEnvelope className="text-success me-2" />
-              <strong>Email :</strong>
+              <span>Email : {userData.userEmail}</span>
             </p>
           </div>
           <button
