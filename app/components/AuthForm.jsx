@@ -11,7 +11,6 @@ import {
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
-  // const [isLogin, setIsLogin] = useState(false);
 
   return (
     <div>
@@ -85,6 +84,7 @@ const AuthForm = () => {
           <p
             className="text-center mt-3 text-primary"
             style={{ cursor: "pointer" }}
+            onClick={() => setIsLogin(!isLogin)}
           >
             {isLogin ? "Create an account" : "Alreday have an account? Login"}
           </p>
